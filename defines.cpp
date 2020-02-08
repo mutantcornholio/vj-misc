@@ -1,0 +1,2 @@
+#define RENDERSIZE_X 1920
+#define RENDERSIZE_Y 1080
