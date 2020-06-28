@@ -19,11 +19,12 @@ public:
 
 signals:
     void fontUpdated(const QFont&);
+    void lineSpacingUpdated(int);
 
 private slots:
     void fontChanged(const QFont&);
     void fontSizeChanged(int);
-    //void lineSpacingChanged(int);
+    void lineSpacingChanged(int);
     void letterSpacingChanged(int);
     void wordSpacingChanged(int);
     void boldChanged(int);
@@ -35,6 +36,7 @@ private:
     QFont currentFontValue;
     int fontSize;
     int letterSpacing;
+    int lineSpacing;
     int wordSpacing;
     bool bold;
     bool italic;

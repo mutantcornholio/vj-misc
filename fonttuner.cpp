@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "fonttuner.h"
 #include "ui_fonttuner.h"
 
@@ -18,6 +20,10 @@ FontTuner::FontTuner(QWidget *parent) :
     connect(
         ui->letterSpacing, SIGNAL(valueChanged(int)),
         this, SLOT(letterSpacingChanged(int))
+    );
+    connect(
+        ui->lineSpacing, SIGNAL(valueChanged(int)),
+        this, SLOT(lineSpacingChanged(int))
     );
     connect(
         ui->wordSpacing, SIGNAL(valueChanged(int)),
@@ -43,6 +49,8 @@ FontTuner::FontTuner(QWidget *parent) :
     this->underline = ui->underlineBox->isChecked();
     this->fontSize = ui->fontSize->value();
     this->fontChanged(ui->fontBox->currentFont());
+
+    this->lineSpacingChanged(ui->lineSpacing->value());
 }
 
 FontTuner::~FontTuner()
@@ -66,6 +74,12 @@ void FontTuner::letterSpacingChanged(int spacingValue)
 {
     this->letterSpacing = spacingValue;
     this->updateFont();
+}
+
+void FontTuner::lineSpacingChanged(int spacingValue)
+{
+    this->lineSpacing = spacingValue;
+    emit this->lineSpacingUpdated(spacingValue);
 }
 
 void FontTuner::wordSpacingChanged(int spacingValue)

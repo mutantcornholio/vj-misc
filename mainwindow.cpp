@@ -1,8 +1,11 @@
 #include <QDebug>
 #include <QScrollBar>
+#include <QTimer>
+#include <exception>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "initApp.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(
                 ui->fontTuner, SIGNAL(fontUpdated(const QFont&)),
                 this, SLOT(updateFont(const QFont&))
+    );
+
+    connect(
+                ui->fontTuner, SIGNAL(lineSpacingUpdated(int)),
+                this, SLOT(updateLineSpacing(int))
     );
 
     connect(
@@ -34,6 +42,14 @@ MainWindow::MainWindow(QWidget *parent)
     subscribe(this->ui->fontTuner);
 
     this->updateText();
+    this->errorMessage = new QErrorMessage(this);
+
+    try {
+        ensureDirs();
+    }
+    catch (std::exception& e) {
+        this->showException(e, true);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -44,6 +60,11 @@ MainWindow::~MainWindow()
 void MainWindow::updateFont(const QFont& newFont)
 {
     ui->textGLWidget->setFont(newFont);
+}
+
+void MainWindow::updateLineSpacing(int lineSpacing)
+{
+    ui->textGLWidget->setLineSpacing(lineSpacing);
 }
 
 void MainWindow::updateText()
@@ -73,4 +94,25 @@ void MainWindow::subscribe(StatusSenderBearer *sender)
 void MainWindow::drawStatus(QString &status)
 {
     this->ui->statusbar->showMessage(status);
+}
+
+void MainWindow::showError(QString &err, bool fatal)
+{
+    this->errorMessage->showMessage(err);
+    this->errorMessage->exec();
+    if (fatal) {
+        this->scheduleQuit(1);
+    }
+}
+
+void MainWindow::showException(std::exception &err, bool fatal)
+{
+    QString* message = new QString(err.what());
+    this->showError(*message, fatal);
+    delete message;
+}
+
+void MainWindow::scheduleQuit(int returnCode)
+{
+    QTimer::singleShot(100, this, [returnCode]() {qApp->exit(returnCode);});
 }

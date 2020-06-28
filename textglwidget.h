@@ -16,6 +16,7 @@ public:
     void setText(QString);
     void setZoom(qreal);
     void setBoundingSize(int, int);
+    void setLineSpacing(int);
     ~TextGLWidget();
     GLuint textureId();
     QImage *img;
