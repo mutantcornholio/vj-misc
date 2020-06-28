@@ -6,8 +6,7 @@
 namespace fs = std::__fs::filesystem;
 
 
-void ensureDirs()
-{
+void ensureDirs() {
     fs::create_directories(textsDirectory());
     fs::create_directories(fontPresetsDir());
 

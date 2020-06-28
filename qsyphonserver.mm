@@ -1,13 +1,11 @@
 #include "qsyphonserver.h"
 #import <Syphon/Syphon.h>
 
-QSyphonServer::QSyphonServer()
-{
+QSyphonServer::QSyphonServer() {
     mSyphon = nil;
 }
 
-QSyphonServer::~QSyphonServer()
-{
+QSyphonServer::~QSyphonServer() {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     [(SyphonServer *)mSyphon stop];
@@ -16,19 +14,15 @@ QSyphonServer::~QSyphonServer()
     [pool drain];
 }
 
-void QSyphonServer::setName(std::string n)
-{
+void QSyphonServer::setName(std::string n) {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     NSString *title = [NSString stringWithCString:n.c_str()
                                          encoding:[NSString defaultCStringEncoding]];
 
-    if (!mSyphon)
-    {
+    if (!mSyphon) {
         mSyphon = [[SyphonServer alloc] initWithName:title context:CGLGetCurrentContext() options:nil];
-    }
-    else
-    {
+    } else {
         [(SyphonServer *)mSyphon setName:title];
     }
 
@@ -36,12 +30,10 @@ void QSyphonServer::setName(std::string n)
 }
 
 
-void QSyphonServer::publishTexture(GLuint id, GLenum target, GLsizei width, GLsizei height, bool isFlipped)
-{
+void QSyphonServer::publishTexture(GLuint id, GLenum target, GLsizei width, GLsizei height, bool isFlipped) {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
-    if (!mSyphon)
-    {
+    if (!mSyphon) {
         mSyphon = [[SyphonServer alloc] initWithName:@"Untitled" context:CGLGetCurrentContext() options:nil];
     }
 

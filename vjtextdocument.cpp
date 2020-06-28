@@ -6,12 +6,10 @@
 #include <QTextBlock>
 
 
-VJTextDocument::VJTextDocument()
-{
+VJTextDocument::VJTextDocument() {
 }
 
-void VJTextDocument::drawContents(QPainter *p, const QRect &rect)
-{
+void VJTextDocument::drawContents(QPainter *p, const QRect &rect) {
     p->save();
     QAbstractTextDocumentLayout::PaintContext ctx;
 
@@ -28,8 +26,7 @@ void VJTextDocument::drawContents(QPainter *p, const QRect &rect)
         }
     }
 
-    if (rect.isValid())
-    {
+    if (rect.isValid()) {
         p->setClipRect(rect);
         ctx.clip = rect;
     }
@@ -38,7 +35,6 @@ void VJTextDocument::drawContents(QPainter *p, const QRect &rect)
     p->restore();
 }
 
-void VJTextDocument::setLineSpacing(int lineSpacing)
-{
+void VJTextDocument::setLineSpacing(int lineSpacing) {
     this->lineSpacing = lineSpacing;
 }

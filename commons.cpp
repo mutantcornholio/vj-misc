@@ -15,8 +15,7 @@
 
 namespace fs = std::__fs::filesystem;
 
-const char* homedir()
-{
+const char* homedir() {
     const char *homedir;
 
     if ((homedir = getenv("HOME")) == NULL) {
@@ -26,8 +25,7 @@ const char* homedir()
     return homedir;
 }
 
-fs::path textsDirectory()
-{
+fs::path textsDirectory() {
 
     fs::path dirPath = fs::path(homedir());
     dirPath /= ".vj-misc";
@@ -36,8 +34,7 @@ fs::path textsDirectory()
     return dirPath;
 }
 
-fs::path fontPresetsDir()
-{
+fs::path fontPresetsDir() {
 
     fs::path dirPath = fs::path(homedir());
     dirPath /= ".vj-misc";
@@ -46,8 +43,7 @@ fs::path fontPresetsDir()
     return dirPath;
 }
 
-bool isJson(const std::string &filename)
-{
+bool isJson(const std::string &filename) {
     return filename.compare(filename.length() - 5, 5, ".json") == 0;
 }
 
@@ -73,8 +69,7 @@ QStringList getPresetNames() {
     return presetNamesList;
 }
 
-QString getPresetFileName(const QString &presetName)
-{
+QString getPresetFileName(const QString &presetName) {
     fs::path filePath = fontPresetsDir();
     filePath /= presetName.toStdString();
     filePath += ".json";
@@ -82,8 +77,7 @@ QString getPresetFileName(const QString &presetName)
     return QString(filePath.c_str());
 }
 
-PresetContent getPresetContent(const QString &presetName)
-{
+PresetContent getPresetContent(const QString &presetName) {
     QFile jsonFile(getPresetFileName(presetName));
     jsonFile.open(QIODevice::ReadOnly);
 
@@ -96,16 +90,14 @@ PresetContent getPresetContent(const QString &presetName)
     return content;
 }
 
-void savePresetContent(PresetContent &presetContent, const QString &presetName)
-{
+void savePresetContent(PresetContent &presetContent, const QString &presetName) {
     QFile jsonFile(getPresetFileName(presetName));
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(presetContent.toJson().toJson());
     jsonFile.close();
 }
 
-QString getTextFileName(const QString &fileName)
-{
+QString getTextFileName(const QString &fileName) {
     fs::path filePath = textsDirectory();
     filePath /= fileName.toStdString();
 

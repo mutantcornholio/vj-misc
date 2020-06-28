@@ -5,10 +5,7 @@
 #include "fonttuner.h"
 #include "ui_fonttuner.h"
 
-FontTuner::FontTuner(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FontTuner)
-{
+FontTuner::FontTuner(QWidget *parent) : QWidget(parent), ui(new Ui::FontTuner) {
     ui->setupUi(this);
 
     connect(
@@ -70,67 +67,56 @@ FontTuner::FontTuner(QWidget *parent) :
     this->lineSpacingChanged(ui->lineSpacing->value());
 }
 
-FontTuner::~FontTuner()
-{
+FontTuner::~FontTuner() {
     delete ui;
 }
 
-void FontTuner::fontChanged(const QFont& font)
-{
+void FontTuner::fontChanged(const QFont& font) {
     this->currentFontValue = QFont(font);
     this->updateFont();
 }
 
-void FontTuner::fontSizeChanged(int fontSize)
-{
+void FontTuner::fontSizeChanged(int fontSize) {
     this->fontSize = fontSize;
     this->updateFont();
 }
 
-void FontTuner::letterSpacingChanged(int spacingValue)
-{
+void FontTuner::letterSpacingChanged(int spacingValue) {
     this->letterSpacing = spacingValue;
     this->updateFont();
 }
 
-void FontTuner::lineSpacingChanged(int spacingValue)
-{
+void FontTuner::lineSpacingChanged(int spacingValue) {
     this->lineSpacing = spacingValue;
     emit this->lineSpacingUpdated(spacingValue);
 }
 
-void FontTuner::wordSpacingChanged(int spacingValue)
-{
+void FontTuner::wordSpacingChanged(int spacingValue) {
     this->wordSpacing = spacingValue;
     this->updateFont();
 }
 
-void FontTuner::boldChanged(int)
-{
+void FontTuner::boldChanged(int) {
     this->bold = ui->boldBox->isChecked();
     this->updateFont();
 }
 
-void FontTuner::italicChanged(int)
-{
+void FontTuner::italicChanged(int) {
     this->italic = ui->italicBox->isChecked();
     this->updateFont();
 }
 
-void FontTuner::underlineChanged(int)
-{
+void FontTuner::underlineChanged(int) {
     this->underline = ui->underlineBox->isChecked();
     this->updateFont();
 }
 
-void FontTuner::presetChanged(const QString &text)
-{
+void FontTuner::presetChanged(const QString &text) {
     ui->presetName->setText(text);
     this->loadPreset(text);
 }
 
-void FontTuner::presetSaveClicked()
-{
+void FontTuner::presetSaveClicked() {
     QString presetName = ui->presetName->text();
     PresetContent preset;
     preset.setFont(this->currentFontValue);
@@ -143,8 +129,7 @@ void FontTuner::presetSaveClicked()
     }
 }
 
-void FontTuner::updateFont()
-{
+void FontTuner::updateFont() {
     this->currentFontValue.setPixelSize(this->fontSize);
     this->currentFontValue.setLetterSpacing(QFont::PercentageSpacing, qreal(this->letterSpacing));
     this->currentFontValue.setWordSpacing(qreal(this->wordSpacing));
@@ -155,13 +140,11 @@ void FontTuner::updateFont()
     emit this->fontUpdated(this->currentFontValue);
 }
 
-const QFont& FontTuner::currentFont()
-{
+const QFont& FontTuner::currentFont() {
     return this->currentFontValue;
 }
 
-void FontTuner::loadPreset(const QString &presetName)
-{
+void FontTuner::loadPreset(const QString &presetName) {
     auto presetContent = getPresetContent(presetName);
 
     ui->fontBox->setCurrentFont(QFont(*presetContent.font));

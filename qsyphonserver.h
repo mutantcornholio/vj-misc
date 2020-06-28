@@ -4,8 +4,7 @@
 #include <QObject>
 #include <QOpenGLFunctions>
 
-class QSyphonServer: public QObject
-{
+class QSyphonServer: public QObject {
     Q_OBJECT
 public:
     QSyphonServer();

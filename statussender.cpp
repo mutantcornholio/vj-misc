@@ -1,22 +1,18 @@
 #include "statussender.h"
 
-void StatusSender::status(QString &sta)
-{
+void StatusSender::status(QString &sta) {
     emit(this->newStatus(sta));
 }
 
 
-void StatusSender::status(QString sta)
-{
+void StatusSender::status(QString sta) {
     emit(this->newStatus(sta));
 }
 
-StatusSenderBearer::StatusSenderBearer()
-{
+StatusSenderBearer::StatusSenderBearer() {
     this->s = new StatusSender();
 }
 
-StatusSenderBearer::~StatusSenderBearer()
-{
+StatusSenderBearer::~StatusSenderBearer() {
     delete this->s;
 }

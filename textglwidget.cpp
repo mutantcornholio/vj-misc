@@ -14,8 +14,7 @@
 QPoint zeroPoint = QPoint(0, 0);
 QRect renderRect = QRect(0, 0, RENDERSIZE_X, RENDERSIZE_Y);
 
-QString getCSSForColor(QColor color)
-{
+QString getCSSForColor(QColor color) {
     QString css = "* {color: rgb(%1,%2,%3)}";
     css = css.arg(color.red()).arg(color.green()).arg(color.blue());
 
@@ -37,16 +36,14 @@ TextGLWidget::TextGLWidget(QWidget *parent) : QOpenGLWidget(parent) {
     this->widgetViewport = new QRect(0, 0, this->width(), this->height());
 }
 
-void TextGLWidget::setBoundingSize(int x, int y)
-{
+void TextGLWidget::setBoundingSize(int x, int y) {
     this->minZoom = qMin(
         qreal(x) / qreal(RENDERSIZE_X),
         qreal(y) / qreal(RENDERSIZE_Y)
     );
 }
 
-void TextGLWidget::initializeGL()
-{
+void TextGLWidget::initializeGL() {
     this->syphonServer = new QSyphonServer();
     this->syphonServer->setName("FONT OUTPUT");
 
@@ -54,13 +51,10 @@ void TextGLWidget::initializeGL()
     this->tempImg = new QImage(RENDERSIZE_X, RENDERSIZE_Y, QImage::Format_ARGB32);
 }
 
-void TextGLWidget::resizeGL(int, int)
-{
-
+void TextGLWidget::resizeGL(int, int) {
 }
 
-void TextGLWidget::paintGL()
-{
+void TextGLWidget::paintGL() {
     this->renderImage();
 
     QPainter painter;
@@ -74,8 +68,7 @@ void TextGLWidget::paintGL()
     this->syphonServer->publishTexture(this->texture->textureId(), QOpenGLTexture::Target2D, RENDERSIZE_X, RENDERSIZE_Y, false);
 }
 
-void TextGLWidget::renderImage()
-{
+void TextGLWidget::renderImage() {
     QPainter tempPainter;
     tempPainter.begin(this->tempImg);
 
@@ -110,27 +103,23 @@ void TextGLWidget::renderImage()
     painter.end();
 }
 
-void TextGLWidget::setFont(const QFont& font)
-{
+void TextGLWidget::setFont(const QFont& font) {
     this->font = font;
     this->update();
 }
 
-void TextGLWidget::setLineSpacing(int lineSpacing)
-{
+void TextGLWidget::setLineSpacing(int lineSpacing) {
     this->doc->setLineSpacing(lineSpacing);
     this->update();
 }
 
 
-void TextGLWidget::setText(QString text)
-{
+void TextGLWidget::setText(QString text) {
     this->text = text;
     this->update();
 }
 
-TextGLWidget::~TextGLWidget()
-{
+TextGLWidget::~TextGLWidget() {
     delete this->transform;
     delete this->doc;
     delete this->syphonServer;
@@ -138,8 +127,7 @@ TextGLWidget::~TextGLWidget()
     delete this->tempImg;
 }
 
-void TextGLWidget::setZoom(qreal val)
-{
+void TextGLWidget::setZoom(qreal val) {
     if (val < this->minZoom) {
         this->zoom = this->minZoom;
     } else {
@@ -155,8 +143,7 @@ void TextGLWidget::setZoom(qreal val)
     this->update();
 }
 
-void TextGLWidget::updateCopyRect()
-{
+void TextGLWidget::updateCopyRect() {
     QAbstractTextDocumentLayout *layout = this->doc->documentLayout();
     QSizeF docSize = layout->documentSize();
 

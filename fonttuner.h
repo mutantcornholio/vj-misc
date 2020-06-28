@@ -9,8 +9,7 @@ namespace Ui {
 class FontTuner;
 }
 
-class FontTuner : public QWidget, public StatusSenderBearer
-{
+class FontTuner : public QWidget, public StatusSenderBearer {
     Q_OBJECT
 
 public:

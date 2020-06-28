@@ -8,8 +8,7 @@
 #include "statussender.h"
 #include "vjtextdocument.h"
 
-class TextGLWidget : public QOpenGLWidget, public StatusSenderBearer
-{
+class TextGLWidget : public QOpenGLWidget, public StatusSenderBearer {
 public:
     TextGLWidget(QWidget *parent);
     void setFont(const QFont&);

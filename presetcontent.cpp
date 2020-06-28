@@ -34,8 +34,7 @@ void PresetContent::loadJson(QJsonDocument &doc) {
 }
 
 const QJsonDocument PresetContent::toJson() {
-    QJsonObject obj
-    {
+    QJsonObject obj {
         {"lineSpacing", this->lineSpacing},
         {"fontFamily", this->font->family()},
         {"fontSize", this->font->pixelSize()},

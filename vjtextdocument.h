@@ -3,8 +3,7 @@
 
 #include <QTextDocument>
 
-class VJTextDocument : public QTextDocument
-{
+class VJTextDocument : public QTextDocument {
     Q_OBJECT
 
 public Q_SLOTS:

@@ -3,8 +3,7 @@
 
 #include <QObject>
 
-class StatusSender : public QObject
-{
+class StatusSender : public QObject {
     Q_OBJECT
 
 signals:
@@ -15,8 +14,7 @@ public:
     void status(QString);
 };
 
-class StatusSenderBearer
-{
+class StatusSenderBearer {
 public:
     StatusSender *s;
     StatusSenderBearer();

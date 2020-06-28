@@ -11,10 +11,7 @@
 #include "ui_mainwindow.h"
 #include "initApp.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     this->ui->scrollArea->setAlignment(Qt::AlignVCenter);
 
@@ -71,35 +68,29 @@ MainWindow::MainWindow(QWidget *parent)
     try {
         ensureDirs();
         this->refreshFileList();
-    }
-    catch (std::exception& e) {
+    } catch (std::exception& e) {
         this->showException(e, true);
     }
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::updateFont(const QFont& newFont)
-{
+void MainWindow::updateFont(const QFont& newFont) {
     ui->textGLWidget->setFont(newFont);
 }
 
-void MainWindow::updateLineSpacing(int lineSpacing)
-{
+void MainWindow::updateLineSpacing(int lineSpacing) {
     ui->textGLWidget->setLineSpacing(lineSpacing);
 }
 
-void MainWindow::updateText()
-{
+void MainWindow::updateText() {
     auto text = ui->plainTextEdit->toPlainText();
     ui->textGLWidget->setText(text);
 }
 
-void MainWindow::updateZoom(int value)
-{
+void MainWindow::updateZoom(int value) {
     ui->textGLWidget->setZoom(qreal(value) * 4 / 100);
     auto widgetSize = ui->textGLWidget->size();
     auto scrollAreaSize = ui->scrollArea->size();
@@ -111,18 +102,15 @@ void MainWindow::updateZoom(int value)
     ui->scrollArea->verticalScrollBar()->setSliderPosition(ypos);
 }
 
-void MainWindow::subscribe(StatusSenderBearer *sender)
-{
+void MainWindow::subscribe(StatusSenderBearer *sender) {
     connect(sender->s, &StatusSender::newStatus, this, &MainWindow::drawStatus);
 }
 
-void MainWindow::drawStatus(QString &status)
-{
+void MainWindow::drawStatus(QString &status) {
     this->ui->statusbar->showMessage(status);
 }
 
-void MainWindow::showError(QString &err, bool fatal)
-{
+void MainWindow::showError(QString &err, bool fatal) {
     this->errorMessage->showMessage(err);
     this->errorMessage->exec();
     if (fatal) {
@@ -130,20 +118,17 @@ void MainWindow::showError(QString &err, bool fatal)
     }
 }
 
-void MainWindow::showException(std::exception &err, bool fatal)
-{
+void MainWindow::showException(std::exception &err, bool fatal) {
     QString* message = new QString(err.what());
     this->showError(*message, fatal);
     delete message;
 }
 
-void MainWindow::scheduleQuit(int returnCode)
-{
+void MainWindow::scheduleQuit(int returnCode) {
     QTimer::singleShot(100, this, [returnCode]() {qApp->exit(returnCode);});
 }
 
-void MainWindow::refreshFileList()
-{
+void MainWindow::refreshFileList() {
     QStringList fileList = getTextFileList();
     int currentRow = this->ui->textFilesList->currentRow();
 
@@ -179,8 +164,7 @@ void MainWindow::trySelectFileByName(const QString &filename) {
     }
 }
 
-void MainWindow::fileSelected(QListWidgetItem *current, QListWidgetItem*)
-{
+void MainWindow::fileSelected(QListWidgetItem *current, QListWidgetItem*) {
     if (current == nullptr) {
         return;
     }
