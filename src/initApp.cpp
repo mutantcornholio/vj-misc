@@ -1,7 +1,7 @@
 #include <filesystem>
 #include <QDebug>
 
-#include "commons.h"
+#include "src/commons.h"
 
 namespace fs = std::__fs::filesystem;
 

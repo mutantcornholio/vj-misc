@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QErrorMessage>
 #include <QListWidgetItem>
-#include "fonttuner.h"
-#include "statussender.h"
+#include "src/ui/FontTuner/fonttuner.h"
+#include "src/ui/StatusSender/statussender.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

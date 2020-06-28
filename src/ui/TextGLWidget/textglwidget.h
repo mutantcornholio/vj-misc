@@ -4,9 +4,9 @@
 #include <QOpenGLWidget>
 #include <QOpenGLTexture>
 
-#include "qsyphonserver.h"
-#include "statussender.h"
-#include "vjtextdocument.h"
+#include "src/QSyphonServer/qsyphonserver.h"
+#include "src/ui/StatusSender/statussender.h"
+#include "src/ui/VJTextDocument/vjtextdocument.h"
 
 class TextGLWidget : public QOpenGLWidget, public StatusSenderBearer {
 public:

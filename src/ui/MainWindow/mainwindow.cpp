@@ -6,10 +6,10 @@
 #include <QUrl>
 #include <exception>
 
-#include "mainwindow.h"
-#include "commons.h"
+#include "src/ui/MainWindow/mainwindow.h"
+#include "src/commons.h"
 #include "ui_mainwindow.h"
-#include "initApp.h"
+#include "src/initApp.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);

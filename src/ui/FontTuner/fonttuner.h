@@ -2,8 +2,8 @@
 #define FONTTUNER_H
 
 #include <QWidget>
-#include "statussender.h"
-#include "commons.h"
+#include "src/ui/StatusSender/statussender.h"
+#include "src/commons.h"
 
 namespace Ui {
 class FontTuner;

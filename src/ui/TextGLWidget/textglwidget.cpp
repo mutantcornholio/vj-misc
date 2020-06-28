@@ -8,8 +8,8 @@
 #include <QAbstractTextDocumentLayout>
 
 
-#include "textglwidget.h"
-#include "defines.cpp"
+#include "src/ui/TextGLWidget/textglwidget.h"
+#include "src/defines.cpp"
 
 QPoint zeroPoint = QPoint(0, 0);
 QRect renderRect = QRect(0, 0, RENDERSIZE_X, RENDERSIZE_Y);
