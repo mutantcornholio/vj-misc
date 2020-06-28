@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "statussender.h"
+#include "commons.h"
 
 namespace Ui {
 class FontTuner;
@@ -30,6 +31,8 @@ private slots:
     void boldChanged(int);
     void italicChanged(int);
     void underlineChanged(int);
+    void presetChanged(const QString&);
+    void presetSaveClicked();
 
 private:
     Ui::FontTuner *ui;
@@ -43,6 +46,7 @@ private:
     bool underline;
 
     void updateFont();
+    void loadPreset(const QString&);
 };
 
 #endif // FONTTUNER_H

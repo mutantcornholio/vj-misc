@@ -20,6 +20,8 @@ Project{
             "main.cpp",
             "mainwindow.cpp",
             "mainwindow.h",
+            "presetcontent.cpp",
+            "presetcontent.h",
             "qsyphonserver.h",
             "qsyphonserver.mm",
             "textglwidget.cpp",

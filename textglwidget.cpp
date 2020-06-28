@@ -14,18 +14,11 @@
 QPoint zeroPoint = QPoint(0, 0);
 QRect renderRect = QRect(0, 0, RENDERSIZE_X, RENDERSIZE_Y);
 
-QString getCSSForColor(QColor color, int lineSpacing = 700)
+QString getCSSForColor(QColor color)
 {
     QString css = "* {color: rgb(%1,%2,%3)}";
     css = css.arg(color.red()).arg(color.green()).arg(color.blue());
 
-    css += "* {text-transform: uppercase}";
-    css = css.arg(lineSpacing);
-
-//    css += "QTextLine {padding-top: %1px}";
-//    css = css.arg(lineSpacing);
-
-    qDebug() << css;
     return css;
 }
 
