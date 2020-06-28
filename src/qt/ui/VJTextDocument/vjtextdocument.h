@@ -2,7 +2,7 @@
 #define VJTEXTDOCUMENT_H
 
 #include <QTextDocument>
-#include "src/FontPreset/fontpreset.h"
+#include "src/qt/FontPreset/fontpreset.h"
 
 class VJTextDocument : public QTextDocument {
     Q_OBJECT

@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <QObject>
-#include "src/ui/MainWindow/mainwindow.h"
+#include "src/qt/ui/MainWindow/mainwindow.h"
 #include "defines.cpp"
 
 

@@ -287,13 +287,13 @@ Some more testing</string>
   <customwidget>
    <class>FontTuner</class>
    <extends>QWidget</extends>
-   <header>src/ui/FontTuner/fonttuner.h</header>
+   <header>src/qt/ui/FontTuner/fonttuner.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TextGLWidget</class>
    <extends>QOpenGLWidget</extends>
-   <header>src/ui/TextGLWidget/textglwidget.h</header>
+   <header>src/qt/ui/TextGLWidget/textglwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>

@@ -5,7 +5,7 @@
 #include <QTextBlock>
 
 #include "vjtextdocument.h"
-#include "src/defines.cpp"
+#include "src/qt/defines.cpp"
 
 VJTextDocument::VJTextDocument() {
 }

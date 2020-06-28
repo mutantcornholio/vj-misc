@@ -4,10 +4,10 @@
 #include <QOpenGLWidget>
 #include <QOpenGLTexture>
 
-#include "src/FontPreset/fontpreset.h"
-#include "src/QSyphonServer/qsyphonserver.h"
-#include "src/ui/StatusSender/statussender.h"
-#include "src/ui/VJTextDocument/vjtextdocument.h"
+#include "src/qt/FontPreset/fontpreset.h"
+#include "src/qt/QSyphonServer/qsyphonserver.h"
+#include "src/qt/ui/StatusSender/statussender.h"
+#include "src/qt/ui/VJTextDocument/vjtextdocument.h"
 
 class TextGLWidget : public QOpenGLWidget, public StatusSenderBearer {
 public:

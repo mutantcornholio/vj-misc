@@ -3,9 +3,9 @@
 
 #include <QWidget>
 #include <QButtonGroup>
-#include "src/ui/StatusSender/statussender.h"
-#include "src/FontPreset/fontpreset.h"
-#include "src/commons.h"
+#include "src/qt/ui/StatusSender/statussender.h"
+#include "src/qt/FontPreset/fontpreset.h"
+#include "src/qt/commons.h"
 
 namespace Ui {
 class FontTuner;

@@ -3,7 +3,7 @@
 #include <QJsonObject>
 #include <QFont>
 
-#include "src/FontPreset/fontpreset.h"
+#include "src/qt/FontPreset/fontpreset.h"
 
 
 FontPreset::FontPreset() {

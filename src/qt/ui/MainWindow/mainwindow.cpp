@@ -6,11 +6,11 @@
 #include <QUrl>
 #include <exception>
 
-#include "src/ui/MainWindow/mainwindow.h"
-#include "src/FontPreset/fontpreset.h"
-#include "src/commons.h"
+#include "src/qt/ui/MainWindow/mainwindow.h"
+#include "src/qt/FontPreset/fontpreset.h"
+#include "src/qt/commons.h"
 #include "ui_mainwindow.h"
-#include "src/initApp.h"
+#include "src/qt/initApp.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);

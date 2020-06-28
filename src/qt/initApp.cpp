@@ -1,7 +1,7 @@
 #include <filesystem>
 #include <QDebug>
 
-#include "src/commons.h"
+#include "src/qt/commons.h"
 
 namespace fs = std::__fs::filesystem;
 
