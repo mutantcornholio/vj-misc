@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QErrorMessage>
+#include <QListWidgetItem>
 #include "fonttuner.h"
 #include "statussender.h"
 
@@ -28,10 +29,16 @@ private slots:
     void showException(std::exception &err, bool fatal = false);
     void showError(QString &err, bool fatal = false);
     void scheduleQuit(int returnCode);
+    void refreshFileList();
+    void fileSelected(QListWidgetItem*, QListWidgetItem*);
+    void saveFileClicked();
+    void openInFinderClicked();
 
 private:
     Ui::MainWindow *ui;
     void subscribe(StatusSenderBearer *);
     QErrorMessage *errorMessage;
+    void trySelectFileByName(const QString &filename);
+
 };
 #endif // MAINWINDOW_H

@@ -1,9 +1,13 @@
 #include <QDebug>
 #include <QScrollBar>
 #include <QTimer>
+#include <QListWidgetItem>
+#include <QDesktopServices>
+#include <QUrl>
 #include <exception>
 
 #include "mainwindow.h"
+#include "commons.h"
 #include "ui_mainwindow.h"
 #include "initApp.h"
 
@@ -34,6 +38,26 @@ MainWindow::MainWindow(QWidget *parent)
                 this, SLOT(updateZoom(int))
     );
 
+    connect(
+                ui->refreshFilesList, SIGNAL(clicked()),
+                this, SLOT(refreshFileList())
+    );
+
+    connect(
+                ui->textFilesList, SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)),
+                this, SLOT(fileSelected(QListWidgetItem*, QListWidgetItem*))
+    );
+
+    connect(
+                ui->saveFile, SIGNAL(clicked()),
+                this, SLOT(saveFileClicked())
+    );
+
+    connect(
+                ui->openInFinder, SIGNAL(clicked()),
+                this, SLOT(openInFinderClicked())
+    );
+
     ui->textGLWidget->setBoundingSize(ui->scrollArea->width(), ui->scrollArea->height());
     this->updateFont(ui->fontTuner->currentFont());
     this->updateZoom(ui->fontZoom->value());
@@ -46,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     try {
         ensureDirs();
+        this->refreshFileList();
     }
     catch (std::exception& e) {
         this->showException(e, true);
@@ -115,4 +140,73 @@ void MainWindow::showException(std::exception &err, bool fatal)
 void MainWindow::scheduleQuit(int returnCode)
 {
     QTimer::singleShot(100, this, [returnCode]() {qApp->exit(returnCode);});
+}
+
+void MainWindow::refreshFileList()
+{
+    QStringList fileList = getTextFileList();
+    int currentRow = this->ui->textFilesList->currentRow();
+
+    QString currentFileName;
+    if (currentRow != -1) {
+        currentFileName = this->ui->textFilesList->currentItem()->text();
+    }
+    this->ui->textFilesList->clear();
+    this->ui->textFilesList->update();
+
+    if (fileList.length() > 0) {
+        this->ui->textFilesList->addItems(fileList);
+
+        if (currentRow == -1) {
+            this->ui->textFilesList->setCurrentRow(0);
+        } else {
+            this->trySelectFileByName(currentFileName);
+        }
+    }
+}
+
+void MainWindow::trySelectFileByName(const QString &filename) {
+    if (this->ui->textFilesList->count() == 0) {
+        return;
+    }
+    auto itemsList = this->ui->textFilesList->findItems(filename, Qt::MatchExactly);
+
+    if (itemsList.length() == 0) {
+        this->ui->textFilesList->setCurrentRow(0);
+    } else {
+        int itemRow = this->ui->textFilesList->row(itemsList[0]);
+        this->ui->textFilesList->setCurrentRow(itemRow);
+    }
+}
+
+void MainWindow::fileSelected(QListWidgetItem *current, QListWidgetItem*)
+{
+    if (current == nullptr) {
+        return;
+    }
+
+    QString fileName = current->text();
+    this->ui->currentFileName->setText(fileName);
+
+    QString fileContent = readTextFile(fileName);
+    this->ui->plainTextEdit->setPlainText(fileContent);
+}
+
+void MainWindow::saveFileClicked() {
+    QString fileName = ui->currentFileName->text();
+    QString oldFileName = this->ui->textFilesList->currentItem()->text();
+
+    QString fileContent = ui->plainTextEdit->toPlainText();
+
+    saveTextFile(fileName, fileContent);
+
+    this->refreshFileList();
+
+    if (fileName != oldFileName) {
+        this->trySelectFileByName(fileName);
+    }
+}
+
+void MainWindow::openInFinderClicked() {
+    QDesktopServices::openUrl(QUrl::fromLocalFile(textsDirectory().c_str()));
 }

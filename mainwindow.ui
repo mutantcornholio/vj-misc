@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>692</height>
+    <height>785</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,17 +18,14 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>300</y>
+      <y>330</y>
       <width>311</width>
-      <height>74</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="plainText">
-     <string>Q_PROPERTY(qreal shear READ shear WRITE setShear)
-    Q_PROPERTY(qreal rotation READ rotation WRITE setRotation)
-    Q_PROPERTY(qreal scale READ scale WRITE setScale)
-    Q_PROPERTY(QString text READ text WRITE setText)
-</string>
+     <string>Some testing
+Some more testing</string>
     </property>
    </widget>
    <widget class="FontTuner" name="fontTuner" native="true">
@@ -45,7 +42,7 @@
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>380</y>
+      <y>440</y>
       <width>22</width>
       <height>211</height>
      </rect>
@@ -61,7 +58,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>380</y>
+      <y>440</y>
       <width>384</width>
       <height>216</height>
      </rect>
@@ -147,6 +144,124 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QToolButton" name="openInFinder">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>370</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+      <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="refreshFilesList">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>330</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+      <normaloff>:/refresh-cw.svg</normaloff>:/refresh-cw.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="currentFileName">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>300</y>
+      <width>181</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>default.txt</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>303</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Current file</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>303</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Files</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="saveFile">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>330</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+      <normaloff>:/save.svg</normaloff>:/save.svg</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="textFilesList">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>330</y>
+      <width>201</width>
+      <height>101</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -177,6 +292,8 @@
    <header>textglwidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc"/>
+ </resources>
  <connections/>
 </ui>

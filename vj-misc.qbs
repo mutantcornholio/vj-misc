@@ -49,5 +49,15 @@ Project{
             name: "Qt"
             submodules: ["core", "gui", "widgets"] // Add more here if needed
         }
+        Group {
+            name: "Icons";
+            fileTags: "qt.core.resource_data";
+            files: [
+                "res/refresh-cw.svg",
+                "res/save.svg",
+                "res/folder.svg",
+            ]
+        }
+
     }
 }

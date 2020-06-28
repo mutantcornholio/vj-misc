@@ -9,8 +9,13 @@
 
 namespace fs = std::__fs::filesystem;
 
-fs::path textsDir();
+fs::path textsDirectory();
 fs::path fontPresetsDir();
+
+QStringList getTextFileList();
+QString readTextFile(const QString &filename);
+void saveTextFile(const QString &filename, const QString &content);
+
 QStringList getPresetNames();
 PresetContent getPresetContent(const QString &presetName);
 void savePresetContent(PresetContent &presetContent, const QString &presetName);

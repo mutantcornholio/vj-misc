@@ -26,7 +26,7 @@ const char* homedir()
     return homedir;
 }
 
-fs::path textsDir()
+fs::path textsDirectory()
 {
 
     fs::path dirPath = fs::path(homedir());
@@ -102,4 +102,37 @@ void savePresetContent(PresetContent &presetContent, const QString &presetName)
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(presetContent.toJson().toJson());
     jsonFile.close();
+}
+
+QString getTextFileName(const QString &fileName)
+{
+    fs::path filePath = textsDirectory();
+    filePath /= fileName.toStdString();
+
+    return QString(filePath.c_str());
+}
+
+
+QStringList getTextFileList() {
+    QDir textsDir(textsDirectory().c_str());
+    textsDir.setFilter(QDir::Files);
+
+    QStringList filenamesList = textsDir.entryList();
+
+    return filenamesList;
+}
+
+QString readTextFile(const QString &filename) {
+    QFile textFile(getTextFileName(filename));
+    textFile.open(QIODevice::ReadOnly);
+    QString res(textFile.readAll());
+    textFile.close();
+    return res;
+}
+
+void saveTextFile(const QString &filename, const QString &content) {
+    QFile textFile(getTextFileName(filename));
+    textFile.open(QIODevice::WriteOnly);
+    textFile.write(content.toUtf8());
+    textFile.close();
 }
