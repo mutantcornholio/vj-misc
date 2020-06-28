@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Виджей помойка</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../../../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+    <normaloff>:/eye-off.svg</normaloff>:/eye-off.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPlainTextEdit" name="plainTextEdit">
     <property name="geometry">
@@ -157,7 +161,7 @@ Some more testing</string>
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+     <iconset resource="../../../../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
       <normaloff>:/folder.svg</normaloff>:/folder.svg</iconset>
     </property>
     <property name="iconSize">
@@ -180,7 +184,7 @@ Some more testing</string>
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+     <iconset resource="../../../../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
       <normaloff>:/refresh-cw.svg</normaloff>:/refresh-cw.svg</iconset>
     </property>
     <property name="iconSize">
@@ -242,7 +246,7 @@ Some more testing</string>
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
+     <iconset resource="../../../../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc">
       <normaloff>:/save.svg</normaloff>:/save.svg</iconset>
     </property>
     <property name="iconSize">
@@ -283,17 +287,17 @@ Some more testing</string>
   <customwidget>
    <class>FontTuner</class>
    <extends>QWidget</extends>
-   <header>fonttuner.h</header>
+   <header>src/ui/FontTuner/fonttuner.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>TextGLWidget</class>
    <extends>QOpenGLWidget</extends>
-   <header>textglwidget.h</header>
+   <header>src/ui/TextGLWidget/textglwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc"/>
+  <include location="../../../../build-vj-misc-Desktop-Debug/Debug/vj-misc.bab04549/vj-misc.qrc"/>
  </resources>
  <connections/>
 </ui>

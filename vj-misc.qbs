@@ -5,11 +5,9 @@ import qbs.FileInfo
 import qbs.TextFile
 
 Project{
-    property string of_root: "/Applications/of_v0.10.1_osx_release"
-
     QtGuiApplication {
-
         name: "vj-misc"
+        type: ["application"]
 
         files: [
             "src/commons.cpp",
@@ -34,6 +32,7 @@ Project{
             "src/ui/StatusSender/statussender.cpp",
             "src/ui/VJTextDocument/vjtextdocument.cpp",
             "src/ui/VJTextDocument/vjtextdocument.h",
+
         ]
 
         Depends{
@@ -49,6 +48,32 @@ Project{
             name: "Qt"
             submodules: ["core", "gui", "widgets"] // Add more here if needed
         }
+
+        Depends {
+            name: "ib"
+            condition: qbs.targetOS.contains("macos")
+        }
+
+        Properties {
+            condition: qbs.targetOS.contains("macos")
+            ib.appIconName: "VJMisc"
+        }
+
+        Group {
+            name: "Icons (macOS)"
+            condition: qbs.targetOS.contains("macos")
+            files: [
+                "vj-misc.xcassets",
+            ]
+        }
+
+        Group {
+            condition: qbs.targetOS.contains("osx")
+            fileTagsFilter: ["infoplist"]
+            qbs.install: true
+            qbs.installSourceBase: product.buildDirectory
+        }
+
         Group {
             name: "Icons";
             fileTags: "qt.core.resource_data";
@@ -56,6 +81,7 @@ Project{
                 "res/refresh-cw.svg",
                 "res/save.svg",
                 "res/folder.svg",
+                "res/eye-off.svg",
             ]
         }
 
