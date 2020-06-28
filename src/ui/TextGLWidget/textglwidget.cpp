@@ -113,6 +113,10 @@ void TextGLWidget::setLineSpacing(int lineSpacing) {
     this->update();
 }
 
+void TextGLWidget::setAlignment(FontPreset::Alignment alignment) {
+    this->doc->setAlignment(alignment);
+    this->update();
+}
 
 void TextGLWidget::setText(QString text) {
     this->text = text;

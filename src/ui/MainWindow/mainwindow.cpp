@@ -7,6 +7,7 @@
 #include <exception>
 
 #include "src/ui/MainWindow/mainwindow.h"
+#include "src/FontPreset/fontpreset.h"
 #include "src/commons.h"
 #include "ui_mainwindow.h"
 #include "src/initApp.h"
@@ -23,6 +24,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(
                 ui->fontTuner, SIGNAL(lineSpacingUpdated(int)),
                 this, SLOT(updateLineSpacing(int))
+    );
+
+    connect(
+                ui->fontTuner, SIGNAL(alignmentUpdated(FontPreset::Alignment)),
+                this, SLOT(updateAlignment(FontPreset::Alignment))
     );
 
     connect(
@@ -56,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     );
 
     ui->textGLWidget->setBoundingSize(ui->scrollArea->width(), ui->scrollArea->height());
-    this->updateFont(ui->fontTuner->currentFont());
+    this->updateFont(QFont(ui->fontTuner->currentFont()));
     this->updateZoom(ui->fontZoom->value());
 
     subscribe(this->ui->textGLWidget);
@@ -83,6 +89,10 @@ void MainWindow::updateFont(const QFont& newFont) {
 
 void MainWindow::updateLineSpacing(int lineSpacing) {
     ui->textGLWidget->setLineSpacing(lineSpacing);
+}
+
+void MainWindow::updateAlignment(FontPreset::Alignment alignment) {
+    ui->textGLWidget->setAlignment(alignment);
 }
 
 void MainWindow::updateText() {

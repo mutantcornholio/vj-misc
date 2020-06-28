@@ -10,7 +10,7 @@
 #include <vector>
 #include <fstream>
 
-#include "src/files/PresetContent/presetcontent.h"
+#include "src/FontPreset/fontpreset.h"
 
 
 namespace fs = std::__fs::filesystem;
@@ -77,20 +77,17 @@ QString getPresetFileName(const QString &presetName) {
     return QString(filePath.c_str());
 }
 
-PresetContent getPresetContent(const QString &presetName) {
+void loadPreset(const QString &presetName, FontPreset* dst) {
     QFile jsonFile(getPresetFileName(presetName));
     jsonFile.open(QIODevice::ReadOnly);
 
     QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll());
     jsonFile.close();
 
-    PresetContent content;
-    content.loadJson(doc);
-
-    return content;
+    dst->loadJson(doc);
 }
 
-void savePresetContent(PresetContent &presetContent, const QString &presetName) {
+void savePreset(FontPreset &presetContent, const QString &presetName) {
     QFile jsonFile(getPresetFileName(presetName));
     jsonFile.open(QIODevice::WriteOnly);
     jsonFile.write(presetContent.toJson().toJson());

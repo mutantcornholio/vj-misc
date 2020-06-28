@@ -2,7 +2,9 @@
 #define FONTTUNER_H
 
 #include <QWidget>
+#include <QButtonGroup>
 #include "src/ui/StatusSender/statussender.h"
+#include "src/FontPreset/fontpreset.h"
 #include "src/commons.h"
 
 namespace Ui {
@@ -20,6 +22,7 @@ public:
 signals:
     void fontUpdated(const QFont&);
     void lineSpacingUpdated(int);
+    void alignmentUpdated(FontPreset::Alignment);
 
 private slots:
     void fontChanged(const QFont&);
@@ -32,20 +35,20 @@ private slots:
     void underlineChanged(int);
     void presetChanged(const QString&);
     void presetSaveClicked();
+    void alignChanged(int, bool);
 
 private:
     Ui::FontTuner *ui;
-    QFont currentFontValue;
-    int fontSize;
-    int letterSpacing;
-    int lineSpacing;
-    int wordSpacing;
-    bool bold;
-    bool italic;
-    bool underline;
+    FontPreset *preset;
 
-    void updateFont();
-    void loadPreset(const QString&);
+    void readPresetFromUI();
+    void setUIFromPreset();
+
+    void emitFontUpdate();
+    void emitAlignmentUpdate();
+    void emitLineSpacingUpdate();
+    void selectAlignmentRadiobutton();
+    QButtonGroup *alignRadioGroup;
 };
 
 #endif // FONTTUNER_H

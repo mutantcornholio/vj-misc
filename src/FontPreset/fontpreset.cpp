@@ -3,39 +3,46 @@
 #include <QJsonObject>
 #include <QFont>
 
-#include "presetcontent.h"
+#include "src/FontPreset/fontpreset.h"
 
 
-PresetContent::PresetContent() {
-    this->font = new QFont();
+FontPreset::FontPreset() {
     this->lineSpacing = 0;
+    this->alignment = Alignment::Left;
+    this->font = new QFont();
 }
 
-void PresetContent::setFont(const QFont &font) {
-    delete this->font;
-    this->font = new QFont(font);
+void FontPreset::setFont(const QFont newFont) {
+    QFont* font1 = new QFont(newFont);
+    this->font->swap(*font1);
 }
 
-void PresetContent::setLineSpacing(int lineSpacing) {
+void FontPreset::setLineSpacing(int lineSpacing) {
     this->lineSpacing = lineSpacing;
 }
 
-void PresetContent::loadJson(QJsonDocument &doc) {
-    delete this->font;
-    this->font = new QFont();
+void FontPreset::setAlignment(Alignment alignment) {
+    this->alignment = alignment;
+}
+
+void FontPreset::loadJson(QJsonDocument &doc) {
     this->font->setFamily(doc["fontFamily"].toString("Arial"));
-    this->lineSpacing = doc["lineSpacing"].toInt(0);
     this->font->setPixelSize(doc["fontSize"].toInt(100));
-    this->font->setLetterSpacing(QFont::PercentageSpacing, doc["letterSpacing"].toInt(100));
+    this->font->setLetterSpacing(QFont::SpacingType::AbsoluteSpacing, doc["letterSpacing"].toInt(100));
     this->font->setWordSpacing(doc["wordSpacing"].toInt(1));
     this->font->setBold(doc["bold"].toBool());
     this->font->setItalic(doc["italic"].toBool());
     this->font->setUnderline(doc["underline"].toBool());
+
+    this->alignment = Alignment(doc["alignment"].toInt(0));
+    this->lineSpacing = doc["lineSpacing"].toInt(0);
 }
 
-const QJsonDocument PresetContent::toJson() {
+const QJsonDocument FontPreset::toJson() {
     QJsonObject obj {
         {"lineSpacing", this->lineSpacing},
+        {"alignment", int(this->alignment)},
+
         {"fontFamily", this->font->family()},
         {"fontSize", this->font->pixelSize()},
         {"letterSpacing", this->font->letterSpacing()},

@@ -4,6 +4,7 @@
 #include <QOpenGLWidget>
 #include <QOpenGLTexture>
 
+#include "src/FontPreset/fontpreset.h"
 #include "src/QSyphonServer/qsyphonserver.h"
 #include "src/ui/StatusSender/statussender.h"
 #include "src/ui/VJTextDocument/vjtextdocument.h"
@@ -16,6 +17,7 @@ public:
     void setZoom(qreal);
     void setBoundingSize(int, int);
     void setLineSpacing(int);
+    void setAlignment(FontPreset::Alignment);
     ~TextGLWidget();
     GLuint textureId();
     QImage *img;

@@ -5,7 +5,7 @@
 
 #endif // COMMONS_H
 
-#include "src/files/PresetContent/presetcontent.h"
+#include "src/FontPreset/fontpreset.h"
 
 namespace fs = std::__fs::filesystem;
 
@@ -17,5 +17,5 @@ QString readTextFile(const QString &filename);
 void saveTextFile(const QString &filename, const QString &content);
 
 QStringList getPresetNames();
-PresetContent getPresetContent(const QString &presetName);
-void savePresetContent(PresetContent &presetContent, const QString &presetName);
+void loadPreset(const QString&, FontPreset*);
+void savePreset(FontPreset &presetContent, const QString &presetName);

@@ -1,12 +1,20 @@
 #include <QDebug>
 #include <QListIterator>
 #include <QJsonDocument>
+#include <QButtonGroup>
 
 #include "fonttuner.h"
 #include "ui_fonttuner.h"
 
 FontTuner::FontTuner(QWidget *parent) : QWidget(parent), ui(new Ui::FontTuner) {
+    this->preset = new FontPreset();
     ui->setupUi(this);
+
+    this->alignRadioGroup = new QButtonGroup(this->ui->align);
+    this->alignRadioGroup->addButton(this->ui->alignLeft, 0);
+    this->alignRadioGroup->addButton(this->ui->alignMiddle, 1);
+    this->alignRadioGroup->addButton(this->ui->alignRight, 2);
+    this->alignRadioGroup->setExclusive(true);
 
     connect(
         ui->fontBox, SIGNAL(currentFontChanged(const QFont&)),
@@ -48,80 +56,94 @@ FontTuner::FontTuner(QWidget *parent) : QWidget(parent), ui(new Ui::FontTuner) {
         ui->savePresetButton, SIGNAL(clicked()),
         this, SLOT(presetSaveClicked())
     );
+    connect(
+        this->alignRadioGroup, SIGNAL(idToggled(int, bool)),
+        this, SLOT(alignChanged(int, bool))
+    );
 
     QStringList presetNames = getPresetNames();
     ui->presetSelectBox->addItems(presetNames);
 
     if (presetNames.length() > 0) {
-        this->loadPreset(presetNames[0]);
+        loadPreset(presetNames[0], this->preset);
     }
 
-    this->letterSpacing = ui->letterSpacing->value();
-    this->wordSpacing = ui->wordSpacing->value();
-    this->bold = ui->boldBox->isChecked();
-    this->italic = ui->italicBox->isChecked();
-    this->underline = ui->underlineBox->isChecked();
-    this->fontSize = ui->fontSize->value();
-    this->fontChanged(ui->fontBox->currentFont());
-
-    this->lineSpacingChanged(ui->lineSpacing->value());
+    this->setUIFromPreset();
 }
 
 FontTuner::~FontTuner() {
     delete ui;
 }
 
+void FontTuner::emitFontUpdate() {
+    emit this->fontUpdated(*this->preset->font);
+}
+
+void FontTuner::emitAlignmentUpdate() {
+    emit this->alignmentUpdated(this->preset->alignment);
+}
+
+void FontTuner::emitLineSpacingUpdate() {
+    emit this->lineSpacingUpdated(this->preset->lineSpacing);
+}
+
 void FontTuner::fontChanged(const QFont& font) {
-    this->currentFontValue = QFont(font);
-    this->updateFont();
+    this->preset->font->setFamily(font.family());
+    this->emitFontUpdate();
 }
 
 void FontTuner::fontSizeChanged(int fontSize) {
-    this->fontSize = fontSize;
-    this->updateFont();
+    this->preset->font->setPixelSize(fontSize);
+    this->emitFontUpdate();
 }
 
 void FontTuner::letterSpacingChanged(int spacingValue) {
-    this->letterSpacing = spacingValue;
-    this->updateFont();
-}
-
-void FontTuner::lineSpacingChanged(int spacingValue) {
-    this->lineSpacing = spacingValue;
-    emit this->lineSpacingUpdated(spacingValue);
+    this->preset->font->setLetterSpacing(QFont::SpacingType::AbsoluteSpacing, spacingValue);
+    this->emitFontUpdate();
 }
 
 void FontTuner::wordSpacingChanged(int spacingValue) {
-    this->wordSpacing = spacingValue;
-    this->updateFont();
+    this->preset->font->setWordSpacing(spacingValue);
+    this->emitFontUpdate();
 }
 
 void FontTuner::boldChanged(int) {
-    this->bold = ui->boldBox->isChecked();
-    this->updateFont();
+    this->preset->font->setBold(ui->boldBox->isChecked());
+    this->emitFontUpdate();
 }
 
 void FontTuner::italicChanged(int) {
-    this->italic = ui->italicBox->isChecked();
-    this->updateFont();
+    this->preset->font->setItalic(ui->italicBox->isChecked());
+    this->emitFontUpdate();
 }
 
 void FontTuner::underlineChanged(int) {
-    this->underline = ui->underlineBox->isChecked();
-    this->updateFont();
+    this->preset->font->setUnderline(ui->underlineBox->isChecked());
+    this->emitFontUpdate();
+}
+
+void FontTuner::lineSpacingChanged(int spacingValue) {
+    this->preset->setLineSpacing(spacingValue);
+    this->emitLineSpacingUpdate();
+}
+
+void FontTuner::alignChanged(int id, bool checked) {
+    if (!checked) {
+        return;
+    }
+    this->preset->alignment = FontPreset::Alignment(id);
+    this->emitAlignmentUpdate();
 }
 
 void FontTuner::presetChanged(const QString &text) {
     ui->presetName->setText(text);
-    this->loadPreset(text);
+    loadPreset(text, this->preset);
+    this->setUIFromPreset();
 }
 
 void FontTuner::presetSaveClicked() {
     QString presetName = ui->presetName->text();
-    PresetContent preset;
-    preset.setFont(this->currentFontValue);
-    preset.setLineSpacing(this->lineSpacing);
-    savePresetContent(preset, presetName);
+    savePreset(*this->preset, presetName);
 
     if (ui->presetSelectBox->currentText() != presetName) {
         ui->presetSelectBox->addItem(presetName);
@@ -129,32 +151,43 @@ void FontTuner::presetSaveClicked() {
     }
 }
 
-void FontTuner::updateFont() {
-    this->currentFontValue.setPixelSize(this->fontSize);
-    this->currentFontValue.setLetterSpacing(QFont::PercentageSpacing, qreal(this->letterSpacing));
-    this->currentFontValue.setWordSpacing(qreal(this->wordSpacing));
-    this->currentFontValue.setBold(this->bold);
-    this->currentFontValue.setItalic(this->italic);
-    this->currentFontValue.setUnderline(this->underline);
-
-    emit this->fontUpdated(this->currentFontValue);
-}
-
 const QFont& FontTuner::currentFont() {
-    return this->currentFontValue;
+    return *this->preset->font;
 }
 
-void FontTuner::loadPreset(const QString &presetName) {
-    auto presetContent = getPresetContent(presetName);
+void FontTuner::selectAlignmentRadiobutton() {
+    switch (this->preset->alignment) {
+        case FontPreset::Alignment::Left : ui->alignLeft->click(); break;
+        case FontPreset::Alignment::Middle : ui->alignMiddle->click(); break;
+        case FontPreset::Alignment::Right : ui->alignRight->click(); break;
+    }
+}
 
-    ui->fontBox->setCurrentFont(QFont(*presetContent.font));
+void FontTuner::readPresetFromUI() {
+    this->preset->setAlignment(FontPreset::Alignment(this->alignRadioGroup->checkedId()));
 
-    ui->fontSize->setValue(presetContent.font->pixelSize());
-    ui->letterSpacing->setValue(presetContent.font->letterSpacing());
-    ui->wordSpacing->setValue(presetContent.font->wordSpacing());
-    ui->boldBox->setCheckState(presetContent.font->bold() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
-    ui->italicBox->setCheckState(presetContent.font->italic() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
-    ui->underlineBox->setCheckState(presetContent.font->underline() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+    this->preset->font->setFamily(ui->fontBox->currentFont().family());
+    this->preset->font->setLetterSpacing(QFont::SpacingType::AbsoluteSpacing, ui->letterSpacing->value());
+    this->preset->font->setWordSpacing(ui->wordSpacing->value());
+    this->preset->font->setBold(ui->boldBox->isChecked());
+    this->preset->font->setItalic(ui->italicBox->isChecked());
+    this->preset->font->setUnderline(ui->underlineBox->isChecked());
 
-    ui->lineSpacing->setValue(presetContent.lineSpacing);
+    this->emitFontUpdate();
+    this->emitAlignmentUpdate();
+    this->emitLineSpacingUpdate();
+}
+
+void FontTuner::setUIFromPreset() {
+    this->selectAlignmentRadiobutton();
+
+    ui->fontBox->setCurrentFont(QFont(*this->preset->font));
+    ui->fontSize->setValue(this->preset->font->pixelSize());
+    ui->letterSpacing->setValue(this->preset->font->letterSpacing());
+    ui->wordSpacing->setValue(this->preset->font->wordSpacing());
+    ui->boldBox->setCheckState(this->preset->font->bold() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+    ui->italicBox->setCheckState(this->preset->font->italic() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+    ui->underlineBox->setCheckState(this->preset->font->underline() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
+
+    ui->lineSpacing->setValue(this->preset->lineSpacing);
 }

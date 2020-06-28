@@ -5,6 +5,7 @@
 #include <QErrorMessage>
 #include <QListWidgetItem>
 #include "src/ui/FontTuner/fonttuner.h"
+#include "src/FontPreset/fontpreset.h"
 #include "src/ui/StatusSender/statussender.h"
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +22,7 @@ public:
 private slots:
     void updateFont(const QFont&);
     void updateLineSpacing(int);
+    void updateAlignment(FontPreset::Alignment);
     void updateText();
 
     void updateZoom(int value);

@@ -52,7 +52,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>line spacing</string>
+    <string>Line spacing</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="lineSpacing">
@@ -78,7 +78,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>letter spacing</string>
+    <string>Letter spacing</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="boldBox">
@@ -91,7 +91,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>bold</string>
+    <string>Bold</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="italicBox">
@@ -104,7 +104,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>italic</string>
+    <string>Italic</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="underlineBox">
@@ -117,7 +117,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>underscore</string>
+    <string>Underscore</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="wordSpacing">
@@ -149,7 +149,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>word spacing</string>
+    <string>Word spacing</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="fontSize">
@@ -178,7 +178,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>font size</string>
+    <string>Font size</string>
    </property>
   </widget>
   <widget class="QComboBox" name="presetSelectBox">
@@ -216,6 +216,58 @@
    <property name="text">
     <string>save preset</string>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="align">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>190</y>
+     <width>120</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Align</string>
+   </property>
+   <widget class="QRadioButton" name="alignRight">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Right</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="alignMiddle">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Middle</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="alignLeft">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Left</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
